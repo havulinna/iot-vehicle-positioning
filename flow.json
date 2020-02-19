@@ -1,0 +1,379 @@
+[
+    {
+        "id": "23b4a240.f93e6e",
+        "type": "mqtt in",
+        "z": "91d23705.a6e628",
+        "name": "",
+        "topic": "/hfp/v2/journey/ongoing/vp/bus/+/+/1074/#",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "5fbd34b1.fdd10c",
+        "x": 160,
+        "y": 40,
+        "wires": [
+            [
+                "1ac3aed3.873c91",
+                "749d86d6.ab3b18"
+            ]
+        ]
+    },
+    {
+        "id": "127fe88f.8694c7",
+        "type": "function",
+        "z": "91d23705.a6e628",
+        "name": "get speed in km/h",
+        "func": "return { \n    payload: Math.round(3.6 * msg.payload.VP.spd)\n};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "debe364.07caac8"
+            ]
+        ]
+    },
+    {
+        "id": "f5dbeade.4fe458",
+        "type": "ui_gauge",
+        "z": "91d23705.a6e628",
+        "name": "Bussin nopeus",
+        "group": "b5ede5a9.58e208",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Nopeus km / h",
+        "label": "km / h",
+        "format": "{{ value }}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 840,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "416f14df.617cbc",
+        "type": "ui_chart",
+        "z": "91d23705.a6e628",
+        "name": "",
+        "group": "b5ede5a9.58e208",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Nopeus km / h",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "",
+        "removeOlder": "2",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 840,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "87c7eef5.900c6",
+        "type": "ui_gauge",
+        "z": "91d23705.a6e628",
+        "name": "",
+        "group": "85918acc.4b1d48",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Kiihtyvyys m / s2",
+        "label": "m/s2",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 850,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "eb4f8d9c.dd1ef",
+        "type": "function",
+        "z": "91d23705.a6e628",
+        "name": "Get acceleration",
+        "func": "return { \n    payload: 3.6 * msg.payload.VP.acc\n};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "45c7085.3c550f8"
+            ]
+        ]
+    },
+    {
+        "id": "45c7085.3c550f8",
+        "type": "smooth",
+        "z": "91d23705.a6e628",
+        "name": "",
+        "property": "payload",
+        "action": "sd",
+        "count": "5",
+        "round": "2",
+        "mult": "single",
+        "reduce": false,
+        "x": 620,
+        "y": 280,
+        "wires": [
+            [
+                "87c7eef5.900c6"
+            ]
+        ]
+    },
+    {
+        "id": "debe364.07caac8",
+        "type": "smooth",
+        "z": "91d23705.a6e628",
+        "name": "",
+        "property": "payload",
+        "action": "mean",
+        "count": "10",
+        "round": "2",
+        "mult": "single",
+        "reduce": false,
+        "x": 620,
+        "y": 380,
+        "wires": [
+            [
+                "f5dbeade.4fe458",
+                "416f14df.617cbc"
+            ]
+        ]
+    },
+    {
+        "id": "a38c0462.c58818",
+        "type": "ui_worldmap",
+        "z": "91d23705.a6e628",
+        "group": "e669468.fbdfcb8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "lat": "60.192059",
+        "lon": "24.945831",
+        "zoom": "",
+        "layer": "Nat Geo",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "path": "/worldmap",
+        "x": 840,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1ac3aed3.873c91",
+        "type": "function",
+        "z": "91d23705.a6e628",
+        "name": "Update map marker",
+        "func": "let VP = msg.payload.VP;\n\nreturn {\n    topic: VP.oper + \"-\" + VP.veh,\n    payload: { \n        name: VP.oper + \"-\" + VP.veh, \n        lat: VP.lat, \n        lon: VP.long,\n        icon: \"arrow\",\n        bearing: VP.hdg,\n        iconColor: VP.dl + 60 > 0 ? \"red\" : \"green\"\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 60,
+        "wires": [
+            [
+                "72e0f0a3.0aefe"
+            ]
+        ]
+    },
+    {
+        "id": "749d86d6.ab3b18",
+        "type": "switch",
+        "z": "91d23705.a6e628",
+        "name": "Savonlinja Oy",
+        "property": "payload.VP.oper",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "30",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "a2bfa244.d27ad"
+            ]
+        ]
+    },
+    {
+        "id": "a2bfa244.d27ad",
+        "type": "switch",
+        "z": "91d23705.a6e628",
+        "name": "Auto 17",
+        "property": "payload.VP.veh",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "17",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "eb4f8d9c.dd1ef",
+                "127fe88f.8694c7"
+            ]
+        ]
+    },
+    {
+        "id": "72e0f0a3.0aefe",
+        "type": "delay",
+        "z": "91d23705.a6e628",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "50",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 600,
+        "y": 160,
+        "wires": [
+            [
+                "a38c0462.c58818"
+            ]
+        ]
+    },
+    {
+        "id": "5fbd34b1.fdd10c",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "mqtt.hsl.fi",
+        "broker": "mqtt.hsl.fi",
+        "port": "8883",
+        "tls": "dd46cd7b.50c19",
+        "clientid": "",
+        "usetls": true,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "b5ede5a9.58e208",
+        "type": "ui_group",
+        "z": "",
+        "name": "Bus speed",
+        "tab": "be4c2374.273e3",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "85918acc.4b1d48",
+        "type": "ui_group",
+        "z": "",
+        "name": "Kiihtyvyys",
+        "tab": "be4c2374.273e3",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e669468.fbdfcb8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Map",
+        "tab": "be4c2374.273e3",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "dd46cd7b.50c19",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true
+    },
+    {
+        "id": "be4c2374.273e3",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
